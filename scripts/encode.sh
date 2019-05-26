@@ -27,12 +27,6 @@ python src/train.py \
     --Glove_path=$GLOVE_PATH \
     --model_config="$MDL_CFGS/$CFG/train.json" &
 
-export CUDA_VISIBLE_DEVICES=1
-python src/eval.py \
-    --input_file_pattern="$DATA_DIR/validation-?????-of-00001" \
-    --checkpoint_dir="$RESULTS_HOME/$CFG/train" \
-    --eval_dir="$RESULTS_HOME/$CFG/eval" \
-    --batch_size=$BS \
-    --model_config="$MDL_CFGS/$CFG/train.json" \
-    --eval_interval_secs=1800 \
-    --sequence_length=$SEQ_LEN &
+python src/encoder_manager.py
+
+

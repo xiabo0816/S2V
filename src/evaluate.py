@@ -22,10 +22,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import eval_classification
-import eval_msrp
-import eval_sick
-import eval_trec
+#import eval_classification
+#import eval_msrp
+#import eval_sick
+#import eval_trec
 
 import tensorflow as tf
 import numpy as np
@@ -69,21 +69,23 @@ def main(unused_argv):
   for mdl_cfg in model_config:
     model_config = configuration.model_config(mdl_cfg, mode="encode")
     encoder.load_model(model_config)
+  print(encoder.encode(["我","吃"]))
 
-  if FLAGS.eval_task in ["MR", "CR", "SUBJ", "MPQA"]:
-    results = eval_classification.eval_nested_kfold(
-        encoder, FLAGS.eval_task, FLAGS.data_dir, use_nb=False)
-    scores = results[0]
-    print('Mean score', np.mean(scores))
-  elif FLAGS.eval_task == "SICK":
-    results = eval_sick.evaluate(encoder, evaltest=True, loc=FLAGS.data_dir)
-  elif FLAGS.eval_task == "MSRP":
-    results = eval_msrp.evaluate(
-        encoder, evalcv=True, evaltest=True, use_feats=False, loc=FLAGS.data_dir)
-  elif FLAGS.eval_task == "TREC":
-    eval_trec.evaluate(encoder, evalcv=True, evaltest=True, loc=FLAGS.data_dir)
-  else:
-    raise ValueError("Unrecognized eval_task: %s" % FLAGS.eval_task)
+
+#  if FLAGS.eval_task in ["MR", "CR", "SUBJ", "MPQA"]:
+#    results = eval_classification.eval_nested_kfold(
+#        encoder, FLAGS.eval_task, FLAGS.data_dir, use_nb=False)
+#    scores = results[0]
+#    print('Mean score', np.mean(scores))
+#  elif FLAGS.eval_task == "SICK":
+#    results = eval_sick.evaluate(encoder, evaltest=True, loc=FLAGS.data_dir)
+#  elif FLAGS.eval_task == "MSRP":
+#    results = eval_msrp.evaluate(
+#        encoder, evalcv=True, evaltest=True, use_feats=False, loc=FLAGS.data_dir)
+#  elif FLAGS.eval_task == "TREC":
+#    eval_trec.evaluate(encoder, evalcv=True, evaltest=True, loc=FLAGS.data_dir)
+#  else:
+#    raise ValueError("Unrecognized eval_task: %s" % FLAGS.eval_task)
 
   encoder.close()
 

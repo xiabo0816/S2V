@@ -21,6 +21,7 @@ from ops import input_ops
 
 FLAGS = tf.flags.FLAGS
 
+
 def read_vocab_embs(vocabulary_file, embedding_matrix_file):
   tf.logging.info("Reading vocabulary from %s", vocabulary_file)
   with tf.gfile.GFile(vocabulary_file, mode="r") as f:
@@ -286,7 +287,7 @@ class s2v(object):
 
     # Targets
     targets_np = np.zeros((FLAGS.batch_size, FLAGS.batch_size))
-    ctxt_sent_pos = range(-FLAGS.context_size, FLAGS.context_size + 1)
+    ctxt_sent_pos = list(range(-FLAGS.context_size, FLAGS.context_size + 1))
     ctxt_sent_pos.remove(0)
     for ctxt_pos in ctxt_sent_pos:
       targets_np += np.eye(FLAGS.batch_size, k=ctxt_pos)

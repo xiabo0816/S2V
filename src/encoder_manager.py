@@ -37,7 +37,6 @@ import s2v_encoder
 
 FLAGS = tf.flags.FLAGS
 
-
 class EncoderManager(object):
   """Manager class for loading and encoding with skip-thoughts models."""
 
